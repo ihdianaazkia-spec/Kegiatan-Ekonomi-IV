@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Petualangan Detektif Ekonomi - IPAS Kelas IV SD</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Fredoka (Judul Ramah Anak) & Nunito (Teks Mudah Dibaca) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --sky-primary: #0ea5e9;
+      --sky-light: #e0f2fe;
+      --yellow-accent: #facc15;
+      --green-accent: #22c55e;
+      --orange-accent: #f97316;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #e0f2fe 0%, #fef9c3 50%, #dcfce7 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #1e293b;
+    }
+
+    h1, h2, h3, .font-display {
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    /* Gaya Kartu Soft 3D Clay / Cartoon */
+    .clay-card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 28px;
+      border: 3px solid #ffffff;
+      box-shadow:
+        0 14px 30px -6px rgba(14, 165, 233, 0.18),
+        0 6px 0 0 rgba(186, 230, 253, 0.9),
+        inset 0 2px 6px rgba(255, 255, 255, 0.9);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Tombol 3D Taktil Ramah Anak */
+    .btn-3d {
+      font-family: 'Fredoka', sans-serif;
+      letter-spacing: 0.03em;
+      border-radius: 20px;
+      transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      user-select: none;
+    }
+
+    .btn-3d:active:not(:disabled) {
+      transform: translateY(5px);
+    }
+
+    .btn-orange {
+      background: linear-gradient(180deg, #fb923c 0%, #f97316 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 0 #c2410c, 0 12px 20px rgba(249, 115, 22, 0.3);
+    }
+    .btn-orange:hover:not(:disabled) {
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #c2410c, 0 15px 24px rgba(249, 115, 22, 0.38);
+    }
+    .btn-orange:active:not(:disabled) {
+      box-shadow: 0 1px 0 #c2410c;
+    }
+
+    .btn-green {
+      background: linear-gradient(180deg, #4ade80 0%, #22c55e 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 0 #15803d, 0 12px 20px rgba(34, 197, 94, 0.3);
+    }
+    .btn-green:hover:not(:disabled) {
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #15803d, 0 15px 24px rgba(34, 197, 94, 0.38);
+    }
+    .btn-green:active:not(:disabled) {
+      box-shadow: 0 1px 0 #15803d;
+    }
+
+    .btn-sky {
+      background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 0 #0369a1, 0 12px 20px rgba(2, 132, 199, 0.3);
+    }
+    .btn-sky:hover:not(:disabled) {
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #0369a1, 0 15px 24px rgba(2, 132, 199, 0.38);
+    }
+    .btn-sky:active:not(:disabled) {
+      box-shadow: 0 1px 0 #0369a1;
+    }
+
+    .btn-yellow {
+      background: linear-gradient(180deg, #fde047 0%, #facc15 100%);
+      color: #713f12;
+      box-shadow: 0 6px 0 #ca8a04, 0 12px 20px rgba(250, 204, 21, 0.3);
+    }
+    .btn-yellow:hover:not(:disabled) {
+      filter: brightness(1.04);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #ca8a04, 0 15px 24px rgba(250, 204, 21, 0.38);
+    }
+    .btn-yellow:active:not(:disabled) {
+      box-shadow: 0 1px 0 #ca8a04;
+    }
+
+    /* Kartu Pilihan Jawaban */
+    .option-card {
+      background: #ffffff;
+      border: 3px solid #bae6fd;
+      border-radius: 20px;
+      box-shadow: 0 5px 0 #bae6fd;
+      transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .option-card:hover:not(.locked) {
+      border-color: #38bdf8;
+      background: #f0f9ff;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 0 #38bdf8;
+    }
+
+    .option-card:active:not(.locked) {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #38bdf8;
+    }
+
+    .option-card.locked {
+      cursor: default;
+    }
+
+    .option-card.correct {
+      background: #dcfce7 !important;
+      border-color: #22c55e !important;
+      box-shadow: 0 5px 0 #16a34a !important;
+      color: #14532d !important;
+    }
+
+    .option-card.wrong {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      box-shadow: 0 5px 0 #dc2626 !important;
+      color: #7f1d1d !important;
+    }
+
+    .option-card.dimmed {
+      opacity: 0.65;
+    }
+
+    /* Animasi Halus */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1.5deg); }
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.92) translateY(14px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+
+    @keyframes starBounce {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      35% { transform: scale(1.28) rotate(-10deg); }
+      70% { transform: scale(1.15) rotate(10deg); }
+    }
+
+    .animate-float {
+      animation: floatSlow 3.6s ease-in-out infinite;
+    }
+
+    .page-enter {
+      animation: popIn 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .animate-shake {
+      animation: shake 0.4s ease-in-out;
+    }
+
+    .animate-star {
+      animation: starBounce 0.9s ease-in-out infinite;
+    }
+
+    /* Dekorasi Awan Latar Belakang */
+    .bg-bubble {
+      position: fixed;
+      border-radius: 9999px;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(2px);
+    }
+
+    /* Canvas Confetti */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 60;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-yellow-200 selection:text-sky-900">
+
+  <!-- Dekorasi Gelembung Latar Belakang Ceria -->
+  <div class="bg-bubble w-64 h-64 bg-sky-300/25 -top-16 -left-16"></div>
+  <div class="bg-bubble w-72 h-72 bg-yellow-300/30 top-1/3 -right-24"></div>
+  <div class="bg-bubble w-80 h-80 bg-green-300/25 -bottom-24 left-1/4"></div>
+
+  <!-- Canvas Confetti Perayaan -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Header Navigasi Atas Global -->
+  <header class="relative z-20 max-w-4xl mx-auto px-4 pt-4 pb-2 flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2.5 bg-white/90 backdrop-blur-sm px-3.5 py-2 rounded-2xl border-2 border-sky-200 shadow-sm">
+      <span class="text-2xl" role="img" aria-label="Kaca Pembesar">🔍</span>
+      <div>
+        <p class="font-display font-bold text-sky-700 text-sm sm:text-base leading-tight">DETEKTIF EKONOMI</p>
+        <p class="text-[11px] sm:text-xs font-bold text-orange-500">IPAS Kelas IV SD • Ibu Ihdiana</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <!-- Badge Nama Murid Aktif (Muncul setelah login) -->
+      <div id="header-student-badge" class="hidden items-center gap-1.5 bg-yellow-100 border-2 border-yellow-300 px-3 py-1.5 rounded-2xl text-xs sm:text-sm font-extrabold text-yellow-900 shadow-sm">
+        <span>🕵️</span>
+        <span id="header-student-name" class="max-w-[110px] sm:max-w-[160px] truncate">Detektif</span>
+      </div>
+
+      <!-- Tombol Suara Mute/Unmute -->
+      <button id="btn-sound-toggle" type="button" onclick="toggleSound()" aria-label="Atur Suara"
+        class="bg-white/95 hover:bg-sky-50 active:scale-95 transition border-2 border-sky-200 rounded-2xl p-2.5 shadow-sm text-sky-700 flex items-center gap-1.5 font-bold text-xs sm:text-sm">
+        <span id="sound-icon" class="text-lg">🔊</span>
+        <span id="sound-label" class="hidden sm:inline">Suara Aktif</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Kontainer Utama Aplikasi -->
+  <main class="relative z-10 max-w-4xl mx-auto px-4 py-4 sm:py-6">
+
+    <!-- =========================================================
+         HALAMAN 1 – LOGIN MURID
+    ========================================================== -->
+    <section id="page-login" class="page-enter">
+      <div class="clay-card p-6 sm:p-10">
+        <!-- Banner Judul Utama -->
+        <div class="text-center mb-6">
+          <span class="inline-block bg-yellow-300 text-yellow-950 font-display font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full border-2 border-yellow-400 shadow-sm mb-3">
+            🌟 ASESMEN DIGITAL IPAS KELAS IV SD 🌟
+          </span>
+          <h1 class="font-display text-2xl sm:text-4xl font-bold text-sky-600 tracking-tight drop-shadow-sm">
+            Selamat Datang, Detektif Ekonomi!
+          </h1>
+          <div class="mt-2 inline-block bg-gradient-to-r from-sky-500 via-teal-500 to-green-500 text-white px-5 py-2 rounded-2xl shadow-md">
+            <h2 class="font-display text-lg sm:text-2xl font-bold tracking-wide">
+              PETUALANGAN DETEKTIF EKONOMI
+            </h2>
+          </div>
+          <p class="mt-2.5 text-slate-600 font-bold text-sm sm:text-base">
+            Belajar Mengenal Produksi, Distribusi, dan Konsumsi
+          </p>
+        </div>
+
+        <!-- Grid Konten Halaman 1: Ilustrasi 3D Detektif & Form Login -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          <!-- Kolom Ilustrasi Kartun 3D Anak Sekolah Detektif -->
+          <div class="md:col-span-5 flex flex-col items-center">
+            <div class="w-56 h-56 sm:w-64 sm:h-64 animate-float">
+              <!-- Ilustrasi SVG Kartun 3D Anak Sekolah Detektif -->
+              <svg viewBox="0 0 300 300" class="w-full h-full drop-shadow-xl" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="bgCircle" cx="40%" cy="35%" r="65%">
+                    <stop offset="0%" stop-color="#bae6fd" />
+                    <stop offset="65%" stop-color="#38bdf8" />
+                    <stop offset="100%" stop-color="#0284c7" />
+                  </radialGradient>
+                  <radialGradient id="skin3d" cx="38%" cy="32%" r="65%">
+                    <stop offset="0%" stop-color="#ffedd5" />
+                    <stop offset="65%" stop-color="#fed7aa" />
+                    <stop offset="100%" stop-color="#fdba74" />
+                  </radialGradient>
+                  <linearGradient id="hat3d" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fde047" />
+                    <stop offset="55%" stop-color="#f59e0b" />
+                    <stop offset="100%" stop-color="#b45309" />
+                  </linearGradient>
+                  <linearGradient id="coat3d" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fb923c" />
+                    <stop offset="65%" stop-color="#ea580c" />
+                    <stop offset="100%" stop-color="#9a3412" />
+                  </linearGradient>
+                  <radialGradient id="glassLens" cx="35%" cy="30%" r="65%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+                    <stop offset="50%" stop-color="#e0f2fe" stop-opacity="0.75" />
+                    <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0.85" />
+                  </radialGradient>
+                </defs>
+
+                <!-- Lingkaran Latar 3D -->
+                <circle cx="150" cy="155" r="122" fill="url(#bgCircle)" />
+                <ellipse cx="115" cy="80" rx="45" ry="20" fill="#ffffff" opacity="0.25" transform="rotate(-25 115 80)" />
+
+                <!-- Badan / Jaket Detektif 3D -->
+                <path d="M78 265 C78 212, 110 192, 150 192 C190 192, 222 212, 222 265 Z" fill="url(#coat3d)" />
+                <!-- Kerah Baju Putih -->
+                <polygon points="150,202 126,192 138,225" fill="#ffffff" />
+                <polygon points="150,202 174,192 162,225" fill="#ffffff" />
+                <!-- Dasi Kupu-kupu Hijau 3D -->
+                <polygon points="150,208 134,199 134,217" fill="#22c55e" />
+                <polygon points="150,208 166,199 166,217" fill="#22c55e" />
+                <circle cx="150" cy="208" r="5" fill="#15803d" />
+
+                <!-- Leher & Kepala 3D -->
+                <rect x="137" y="172" width="26" height="26" rx="12" fill="#fdba74" />
+                <circle cx="150" cy="135" r="54" fill="url(#skin3d)" />
+                <!-- Telinga -->
+                <circle cx="95" cy="138" r="11" fill="#fed7aa" />
+                <circle cx="205" cy="138" r="11" fill="#fdba74" />
+
+                <!-- Rambut Cokelat 3D -->
+                <path d="M96 125 C96 84, 204 84, 204 125 C195 106, 175 102, 150 105 C125 102, 105 106, 96 125 Z" fill="#451a03" />
+
+                <!-- Topi Detektif Deerstalker 3D -->
+                <path d="M92 98 C98 54, 202 54, 208 98 Z" fill="url(#hat3d)" />
+                <ellipse cx="150" cy="99" rx="68" ry="13" fill="#d97706" />
+                <path d="M98 92 Q150 104 202 92" stroke="#78350f" stroke-width="5" fill="none" stroke-linecap="round" />
+                <circle cx="150" cy="63" r="8" fill="#fef08a" />
+
+                <!-- Wajah Ceria -->
+                <!-- Alis -->
+                <path d="M122 117 Q131 112 140 117" stroke="#451a03" stroke-width="4" fill="none" stroke-linecap="round" />
+                <path d="M160 117 Q169 112 178 117" stroke="#451a03" stroke-width="4" fill="none" stroke-linecap="round" />
+                <!-- Mata Berbinar -->
+                <circle cx="131" cy="131" r="8" fill="#1e293b" />
+                <circle cx="134" cy="128" r="3" fill="#ffffff" />
+                <circle cx="169" cy="131" r="8" fill="#1e293b" />
+                <circle cx="172" cy="128" r="3" fill="#ffffff" />
+                <!-- Pipi Merona -->
+                <ellipse cx="116" cy="145" rx="8" ry="5" fill="#fb7185" opacity="0.45" />
+                <ellipse cx="184" cy="145" rx="8" ry="5" fill="#fb7185" opacity="0.45" />
+                <!-- Senyum Lebar -->
+                <path d="M135 152 Q150 168 165 152" stroke="#9a3412" stroke-width="4.5" fill="none" stroke-linecap="round" />
+
+                <!-- Kaca Pembesar 3D di Tangan Kanan -->
+                <g transform="translate(182, 168) rotate(-18)">
+                  <rect x="24" y="54" width="14" height="46" rx="7" fill="#78350f" />
+                  <rect x="26" y="54" width="5" height="44" rx="2.5" fill="#b45309" />
+                  <circle cx="31" cy="31" r="31" fill="#facc15" stroke="#ca8a04" stroke-width="4" />
+                  <circle cx="31" cy="31" r="23" fill="url(#glassLens)" />
+                  <path d="M18 20 Q26 13 38 18" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" />
+                </g>
+
+                <!-- Bintang & Koin Mengambang -->
+                <circle cx="52" cy="110" r="14" fill="#facc15" stroke="#eab308" stroke-width="3" />
+                <text x="52" y="116" text-anchor="middle" font-size="16" font-weight="bold" fill="#854d0e">Rp</text>
+                <polygon points="248,92 252,102 263,103 255,110 257,121 248,115 239,121 241,110 233,103 244,102" fill="#fde047" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Kolom Informasi Kelas & Input Nama -->
+          <div class="md:col-span-7 space-y-5">
+            <!-- Kartu Info Kelas -->
+            <div class="bg-sky-50/90 border-2 border-sky-200 rounded-2xl p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="bg-white rounded-xl p-3 border border-sky-100 shadow-sm flex items-center gap-2.5">
+                <span class="text-2xl">👩‍🏫</span>
+                <div>
+                  <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Pengajar</p>
+                  <p class="font-extrabold text-sky-800 text-sm">Ibu Ihdiana</p>
+                </div>
+              </div>
+              <div class="bg-white rounded-xl p-3 border border-sky-100 shadow-sm flex items-center gap-2.5">
+                <span class="text-2xl">📦</span>
+                <div>
+                  <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Materi</p>
+                  <p class="font-extrabold text-green-700 text-sm">Kegiatan Ekonomi</p>
+                </div>
+              </div>
+              <div class="bg-white rounded-xl p-3 border border-sky-100 shadow-sm flex items-center gap-2.5">
+                <span class="text-2xl">🏫</span>
+                <div>
+                  <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Kelas</p>
+                  <p class="font-extrabold text-orange-600 text-sm">IV SD</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Login Murid -->
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+              <div>
+                <label for="student-name-input" class="block font-display font-bold text-slate-700 text-base sm:text-lg mb-2">
+                  ✍️ Masukkan Nama Lengkapmu, Detektif:
+                </label>
+                <div class="relative">
+                  <input
+                    id="student-name-input"
+                    type="text"
+                    maxlength="50"
+                    autocomplete="off"
+                    placeholder="Contoh: Ahmad Rizky Pratama"
+                    class="w-full px-5 py-4 text-base sm:text-lg font-extrabold text-slate-800 bg-white border-3 border-sky-300 rounded-2xl focus:outline-none focus:border-orange-400 focus:ring-4 focus:ring-orange-200 transition placeholder:text-slate-400 placeholder:font-semibold"
+                  />
+                </div>
+                <!-- Pesan Validasi Nama Kosong -->
+                <p id="name-error-msg" class="hidden mt-2 text-sm font-extrabold text-red-600 bg-red-50 border border-red-200 px-3.5 py-2 rounded-xl flex items-center gap-2">
+                  <span>⚠️</span>
+                  <span>Ups! Isi nama lengkapmu dulu sebelum memulai petualangan ya!</span>
+                </p>
+              </div>
+
+              <button type="submit" class="w-full btn-3d btn-orange py-4 px-6 text-lg sm:text-xl font-bold flex items-center justify-center gap-3 cursor-pointer">
+                <span>🚀</span>
+                <span>MULAI PETUALANGAN</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         HALAMAN 2 – PETUNJUK PERMAINAN
+    ========================================================== -->
+    <section id="page-instructions" class="hidden">
+      <div class="clay-card p-6 sm:p-10">
+        <!-- Sapaan Personal Detektif -->
+        <div class="bg-gradient-to-r from-yellow-200 via-amber-100 to-orange-100 border-2 border-yellow-300 rounded-2xl p-4 sm:p-5 mb-6 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+          <div class="w-16 h-16 rounded-2xl bg-white border-2 border-yellow-400 flex items-center justify-center text-4xl shadow-sm shrink-0">
+            🕵️‍♂️
+          </div>
+          <div>
+            <h2 class="font-display text-xl sm:text-2xl font-bold text-amber-900">
+              Halo, Detektif <span id="welcome-student-name" class="text-orange-600 underline decoration-wavy decoration-orange-400">Murid Hebat</span>!
+            </h2>
+            <p class="text-amber-800 font-bold text-sm sm:text-base mt-1">
+              Siap memecahkan 10 misteri kegiatan ekonomi bersama Ibu Ihdiana? Baca petunjuk misi di bawah ini ya!
+            </p>
+          </div>
+        </div>
+
+        <h3 class="font-display text-xl sm:text-2xl font-bold text-sky-700 mb-4 flex items-center gap-2">
+          <span>📋</span>
+          <span>Petunjuk Misi Detektif</span>
+        </h3>
+
+        <!-- Daftar 6 Petunjuk -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-8">
+          <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-4 flex items-center gap-3.5">
+            <span class="w-9 h-9 rounded-xl bg-sky-500 text-white font-display font-bold flex items-center justify-center shrink-0 shadow-sm">1</span>
+            <p class="font-extrabold text-slate-700 text-sm sm:text-base">Bacalah setiap pertanyaan dengan teliti.</p>
+          </div>
+          <div class="bg-green-50 border-2 border-green-200 rounded-2xl p-4 flex items-center gap-3.5">
+            <span class="w-9 h-9 rounded-xl bg-green-500 text-white font-display font-bold flex items-center justify-center shrink-0 shadow-sm">2</span>
+            <p class="font-extrabold text-slate-700 text-sm sm:text-base">Pilih satu jawaban yang paling tepat.</p>
+          </div>
+          <div class="bg-yellow-50 border-2 border-yellow-300 rounded-2xl p-4 flex items-center gap-3.5">
+            <span class="w-9 h-9 rounded-xl bg-yellow-400 text-yellow-950 font-display font-bold flex items-center justify-center shrink-0 shadow-sm">3</span>
+            <p class="font-extrabold text-slate-700 text-sm sm:text-base">Setiap jawaban benar mendapatkan <strong>10 poin</strong>.</p>
+          </div>
+          <div class="bg-orange-50 border-2 border-orange-200 rounded-2xl p-4 flex items-center gap-3.5">
+            <span class="w-9 h-9 rounded-xl bg-orange-500 text-white font-display font-bold flex items-center justify-center shrink-0 shadow-sm">4</span>
+            <p class="font-extrabold text-slate-700 text-sm sm:text-base">Jawaban salah tidak mendapatkan poin.</p>
+          </div>
+          <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-4 flex items-center gap-3.5">
+            <span class="w-9 h-9 rounded-xl bg-sky-500 text-white font-display font-bold flex items-center justify-center shrink-0 shadow-sm">5</span>
+            <p class="font-extrabold text-slate-700 text-sm sm:text-base">Selesaikan seluruh <strong>10 pertanyaan</strong>.</p>
+          </div>
+          <div class="bg-green-50 border-2 border-green-200 rounded-2xl p-4 flex items-center gap-3.5">
+            <span class="w-9 h-9 rounded-xl bg-green-500 text-white font-display font-bold flex items-center justify-center shrink-0 shadow-sm">6</span>
+            <p class="font-extrabold text-slate-700 text-sm sm:text-base">Perhatikan feedback setelah menjawab.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <button type="button" onclick="startQuiz()" class="w-full sm:w-auto sm:min-w-[280px] btn-3d btn-green py-4 px-8 text-lg sm:text-xl font-bold flex items-center justify-center gap-3 cursor-pointer">
+            <span>🎯</span>
+            <span>MULAI KUIS</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         HALAMAN 3 – KUIS INTERAKTIF
+    ========================================================== -->
+    <section id="page-quiz" class="hidden">
+      <div class="clay-card p-5 sm:p-8">
+        <!-- Bar Status Atas: Nomor Soal, Progress Bar & Skor Sementara -->
+        <div class="mb-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+            <span class="bg-sky-100 text-sky-800 border-2 border-sky-200 font-display font-bold px-3.5 py-1 rounded-xl text-sm sm:text-base">
+              🔎 Kasus <span id="question-number">1</span> dari 10
+            </span>
+            <span class="bg-yellow-100 text-yellow-900 border-2 border-yellow-300 font-display font-bold px-3.5 py-1 rounded-xl text-sm sm:text-base flex items-center gap-1.5">
+              <span>⭐</span>
+              <span>Skor: <span id="live-score">0</span></span>
+            </span>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="w-full h-4 bg-sky-100 rounded-full p-1 border border-sky-200 overflow-hidden">
+            <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-sky-400 via-green-400 to-yellow-400 rounded-full transition-all duration-500" style="width: 10%;"></div>
+          </div>
+        </div>
+
+        <!-- Konten Soal: Ilustrasi 3D + Pertanyaan -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center bg-sky-50/70 border-2 border-sky-100 rounded-3xl p-4 sm:p-6 mb-6">
+          <!-- Wadah Ilustrasi SVG 3D per Soal -->
+          <div class="md:col-span-4 flex justify-center">
+            <div id="question-illustration" class="w-40 h-40 sm:w-44 sm:h-44 bg-white rounded-3xl p-2.5 border-2 border-sky-200 shadow-md flex items-center justify-center">
+              <!-- Diisi dinamis oleh JS -->
+            </div>
+          </div>
+
+          <!-- Teks Pertanyaan -->
+          <div class="md:col-span-8 text-center md:text-left">
+            <span class="inline-block text-xs font-extrabold uppercase tracking-wider text-orange-600 bg-orange-100 px-3 py-1 rounded-full mb-2">
+              Petunjuk Kasus #<span id="case-badge-num">1</span>
+            </span>
+            <h2 id="question-text" class="font-display text-lg sm:text-2xl font-bold text-slate-800 leading-snug">
+              Memuat pertanyaan...
+            </h2>
+          </div>
+        </div>
+
+        <!-- Pilihan Jawaban A, B, C, D -->
+        <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-6">
+          <!-- Tombol pilihan diisi dinamis oleh JS -->
+        </div>
+
+        <!-- Panel Feedback Jawaban (Tersembunyi sebelum murid menjawab) -->
+        <div id="feedback-panel" class="hidden rounded-3xl p-5 border-3 mb-5 transition-all">
+          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+            <div id="feedback-icon" class="text-5xl shrink-0">🌟</div>
+            <div class="flex-1">
+              <h3 id="feedback-title" class="font-display text-xl sm:text-2xl font-bold mb-1">
+                HEBAT! JAWABAN KAMU BENAR!
+              </h3>
+              <p id="feedback-correct-answer" class="hidden font-extrabold text-sm sm:text-base mb-1.5 px-3 py-1 rounded-xl bg-white/80 inline-block">
+                Jawaban yang benar: A. Produksi
+              </p>
+              <p id="feedback-explanation" class="font-bold text-sm sm:text-base leading-relaxed">
+                Penjelasan singkat akan muncul di sini.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-5 flex justify-center sm:justify-end">
+            <button id="btn-next-question" type="button" onclick="nextQuestion()" class="w-full sm:w-auto btn-3d btn-sky py-3.5 px-7 text-base sm:text-lg font-bold flex items-center justify-center gap-2 cursor-pointer">
+              <span id="btn-next-text">LANJUT SOAL</span>
+              <span>➡️</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         HALAMAN 4 – HASIL AKHIR
+    ========================================================== -->
+    <section id="page-result" class="hidden">
+      <div class="clay-card p-6 sm:p-10 text-center">
+        <!-- Lencana / Piala 3D -->
+        <div class="inline-flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-b from-yellow-200 to-amber-400 border-4 border-white shadow-xl mb-4 animate-float">
+          <span id="result-trophy" class="text-5xl sm:text-6xl">🏆</span>
+        </div>
+
+        <span class="block text-xs sm:text-sm font-extrabold uppercase tracking-wider text-sky-600 mb-1">
+          Laporan Hasil Investigasi Ekonomi
+        </span>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-800 mb-2">
+          Detektif <span id="result-student-name" class="text-sky-600">Nama Murid</span>
+        </h2>
+
+        <!-- Kotak Pesan Motivasi -->
+        <div id="result-motivation-box" class="max-w-xl mx-auto my-4 px-5 py-3.5 rounded-2xl border-2 font-display font-bold text-lg sm:text-xl shadow-sm">
+          Luar Biasa! Kamu Detektif Ekonomi Hebat!
+        </div>
+
+        <!-- Kartu Skor Akhir Besar -->
+        <div class="max-w-xs mx-auto my-6 bg-gradient-to-b from-sky-500 to-sky-600 text-white rounded-3xl p-5 border-4 border-sky-200 shadow-lg">
+          <p class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-sky-100">Skor Akhir Kamu</p>
+          <div class="font-display text-5xl sm:text-6xl font-bold my-1">
+            <span id="result-score">100</span><span class="text-2xl sm:text-3xl text-sky-200">/100</span>
+          </div>
+        </div>
+
+        <!-- Statistik Rincian (Benar, Salah, Persentase) -->
+        <div class="grid grid-cols-3 gap-3 sm:gap-4 max-w-xl mx-auto mb-8">
+          <div class="bg-green-50 border-2 border-green-200 rounded-2xl p-3.5 sm:p-4">
+            <p class="text-2xl sm:text-3xl font-display font-bold text-green-600" id="result-correct-count">10</p>
+            <p class="text-xs sm:text-sm font-extrabold text-green-800 mt-1">✅ Benar</p>
+          </div>
+          <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-3.5 sm:p-4">
+            <p class="text-2xl sm:text-3xl font-display font-bold text-red-500" id="result-wrong-count">0</p>
+            <p class="text-xs sm:text-sm font-extrabold text-red-800 mt-1">❌ Salah</p>
+          </div>
+          <div class="bg-yellow-50 border-2 border-yellow-300 rounded-2xl p-3.5 sm:p-4">
+            <p class="text-2xl sm:text-3xl font-display font-bold text-amber-600"><span id="result-percentage">100</span>%</p>
+            <p class="text-xs sm:text-sm font-extrabold text-amber-800 mt-1">📊 Keberhasilan</p>
+          </div>
+        </div>
+
+        <!-- Tiga Tombol Aksi Utama -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5">
+          <button type="button" onclick="retryQuiz()" class="w-full sm:w-auto btn-3d btn-yellow py-3.5 px-6 text-base font-bold flex items-center justify-center gap-2 cursor-pointer">
+            <span>🔄</span>
+            <span>ULANGI KUIS</span>
+          </button>
+
+          <button type="button" onclick="backToHome()" class="w-full sm:w-auto btn-3d btn-sky py-3.5 px-6 text-base font-bold flex items-center justify-center gap-2 cursor-pointer">
+            <span>🏠</span>
+            <span>KEMBALI KE HALAMAN AWAL</span>
+          </button>
+
+          <button type="button" onclick="finishSession()" class="w-full sm:w-auto btn-3d btn-green py-3.5 px-6 text-base font-bold flex items-center justify-center gap-2 cursor-pointer">
+            <span>🎉</span>
+            <span>SELESAI</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         LAYAR PENUTUP / MODAL SELESAI
+    ========================================================== -->
+    <section id="page-goodbye" class="hidden">
+      <div class="clay-card p-8 sm:p-12 text-center max-w-2xl mx-auto">
+        <div class="text-6xl sm:text-7xl mb-4 animate-float">🎓🌟</div>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-sky-600 mb-3">
+          Terima Kasih, Detektif <span id="goodbye-student-name" class="text-orange-500">Hebat</span>!
+        </h2>
+        <p class="text-slate-600 font-bold text-base sm:text-lg leading-relaxed mb-6">
+          Kamu telah menyelesaikan asesmen digital <strong>Petualangan Detektif Ekonomi</strong> pada mata pelajaran IPAS bersama <strong>Ibu Ihdiana</strong>. Teruslah belajar dan semangat mengenal kegiatan ekonomi di sekitar kita!
+        </p>
+        <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-4 mb-7 inline-block">
+          <p class="font-extrabold text-sky-800 text-sm sm:text-base">
+            Skor Akhir Tercatat: <span id="goodbye-score" class="text-orange-600 font-display text-xl">100</span> / 100
+          </p>
+        </div>
+        <div>
+          <button type="button" onclick="backToHome()" class="btn-3d btn-orange py-3.5 px-8 text-base sm:text-lg font-bold inline-flex items-center gap-2 cursor-pointer">
+            <span>🏠</span>
+            <span>KEMBALI KE HALAMAN AWAL</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Kecil -->
+  <footer class="relative z-10 text-center py-4 px-4 text-xs sm:text-sm font-bold text-slate-500">
+    Media Asesmen Digital IPAS Kelas IV SD • Ibu Ihdiana
+  </footer>
+
+  <script>
+    /* =========================================================================
+       1. KOLEKSI ILUSTRASI KARTUN 3D SVG UNTUK SETIAP SOAL (1 - 10)
+    ========================================================================= */
+    const ILLUSTRATIONS = {
+      // Soal 1: Petani menanam & memanen padi (Produksi)
+      petani: `
+        <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="sky1" cx="40%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#e0f2fe"/><stop offset="100%" stop-color="#7dd3fc"/>
+            </radialGradient>
+            <linearGradient id="caping" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fef08a"/><stop offset="100%" stop-color="#eab308"/>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="8" width="184" height="184" rx="28" fill="url(#sky1)"/>
+          <!-- Sawah Hijau 3D -->
+          <path d="M8 135 Q100 115 192 135 L192 165 Q192 192 165 192 L35 192 Q8 192 8 165 Z" fill="#4ade80"/>
+          <!-- Batang Padi Kuning -->
+          <g stroke="#ca8a04" stroke-width="4" stroke-linecap="round">
+            <path d="M38 168 Q34 140 26 132"/><path d="M52 170 Q50 138 44 128"/>
+            <path d="M150 170 Q154 140 162 130"/><path d="M166 168 Q170 142 178 134"/>
+          </g>
+          <ellipse cx="26" cy="132" rx="7" ry="4" fill="#facc15" transform="rotate(-30 26 132)"/>
+          <ellipse cx="44" cy="128" rx="7" ry="4" fill="#facc15" transform="rotate(-20 44 128)"/>
+          <ellipse cx="162" cy="130" rx="7" ry="4" fill="#facc15" transform="rotate(25 162 130)"/>
+          <ellipse cx="178" cy="134" rx="7" ry="4" fill="#facc15" transform="rotate(35 178 134)"/>
+          <!-- Petani Ceria -->
+          <path d="M68 165 C68 132, 132 132, 132 165 Z" fill="#0284c7"/>
+          <circle cx="100" cy="108" r="24" fill="#fed7aa"/>
+          <circle cx="92" cy="106" r="3.5" fill="#1e293b"/>
+          <circle cx="108" cy="106" r="3.5" fill="#1e293b"/>
+          <path d="M93 116 Q100 123 107 116" stroke="#9a3412" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Caping 3D -->
+          <polygon points="100,56 54,94 146,94" fill="url(#caping)" stroke="#ca8a04" stroke-width="2"/>
+        </svg>`,
+
+      // Soal 2: Kurir mengantarkan paket (Distributor)
+      kurir: `
+        <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="184" height="184" rx="28" fill="#fef3c7"/>
+          <rect x="8" y="148" width="184" height="44" rx="18" fill="#94a3b8"/>
+          <!-- Kurir Ramah -->
+          <path d="M55 162 C55 124, 115 124, 115 162 Z" fill="#f97316"/>
+          <circle cx="85" cy="96" r="24" fill="#fed7aa"/>
+          <!-- Topi Kurir -->
+          <path d="M62 88 C65 65, 105 65, 108 88 Z" fill="#0284c7"/>
+          <rect x="82" y="83" width="34" height="7" rx="3.5" fill="#0369a1"/>
+          <circle cx="79" cy="96" r="3.5" fill="#1e293b"/>
+          <circle cx="95" cy="96" r="3.5" fill="#1e293b"/>
+          <path d="M81 106 Q88 113 95 106" stroke="#9a3412" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Kotak Paket 3D -->
+          <g transform="translate(102, 106)">
+            <rect x="0" y="10" width="54" height="44" rx="8" fill="#d97706"/>
+            <polygon points="0,10 14,0 68,0 54,10" fill="#fbbf24"/>
+            <polygon points="54,10 68,0 68,44 54,54" fill="#b45309"/>
+            <rect x="22" y="10" width="10" height="44" fill="#fef08a" opacity="0.85"/>
+          </g>
+        </svg>`,
+
+      // Soal 3: Anak makan roti (Konsumsi)
+      makanRoti: `
+        <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="184" height="184" rx="28" fill="#dcfce7"/>
+          <!-- Anak Ceria -->
+          <path d="M52 185 C52 135, 148 135, 148 185 Z" fill="#38bdf8"/>
+          <circle cx="100" cy="94" r="34" fill="#fed7aa"/>
+          <path d="M66 86 C68 52, 132 52, 134 86 C120 72, 80 72, 66 86 Z" fill="#451a03"/>
+          <circle cx="88" cy="90" r="4" fill="#1e293b"/>
+          <circle cx="112" cy="90" r="4" fill="#1e293b"/>
+          <ellipse cx="78" cy="100" rx="6" ry="3.5" fill="#fb7185" opacity="0.5"/>
+          <ellipse cx="122" cy="100" rx="6" ry="3.5" fill="#fb7185" opacity="0.5"/>
+          <path d="M90 106 Q100 118 110 106" stroke="#9a3412" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <!-- Roti Lezat 3D -->
+          <g transform="translate(72, 118)">
+            <rect x="0" y="12" width="56" height="30" rx="12" fill="#f59e0b"/>
+            <ellipse cx="28" cy="13" rx="30" ry="12" fill="#fde047"/>
+            <path d="M14 10 L20 16 M28 9 L32 16 M40 10 L44 16" stroke="#b45309" stroke-width="3" stroke-linecap="round"/>
+          </g>
+        </svg>`,
+
+      // Soal 4: Pembuat roti / Baker (Produksi)
+      pembuatRoti: `
+        <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="184" height="184" rx="28" fill="#ffedd5"/>
+          <!-- Meja Dapur -->
+          <rect x="20" y="146" width="160" height="42" rx="14" fill="#fb923c"/>
+          <!-- Koki Roti -->
+          <path d="M58 146 C58 116, 142 116, 142 146 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+          <circle cx="100" cy="94" r="24" fill="#fed7aa"/>
+          <!-- Topi Koki 3D -->
+          <path d="M74 76 C66 56, 88 46, 100 54 C112 46, 134 56, 126 76 Z" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+          <rect x="78" y="72" width="44" height="10" rx="4" fill="#f8fafc"/>
+          <circle cx="92" cy="94" r="3.5" fill="#1e293b"/>
+          <circle cx="108" cy="94" r="3.5" fill="#1e293b"/>
+          <path d="M93 104 Q100 111 107 104" stroke="#9a3412" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Nampan Roti Baru Matang -->
+          <rect x="44" y="136" width="112" height="10" rx="5" fill="#64748b"/>
+          <ellipse cx="74" cy="130" rx="18" ry="10" fill="#f59e0b"/>
+          <ellipse cx="126" cy="130" rx="18" ry="10" fill="#f59e0b"/>
+        </svg>`,
+
+      // Soal 5: Truk menyalurkan barang (Distribusi)
+      trukDistribusi: `
+        <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="184" height="184" rx="28" fill="#e0f2fe"/>
+          <!-- Jalan Raya -->
+          <rect x="8" y="146" width="184" height="46" rx="18" fill="#475569"/>
+          <line x1="25" y1="168" x2="60" y2="168" stroke="#facc15" stroke-width="5" stroke-linecap="round"/>
+          <line x1="85" y1="168" x2="120" y2="168" stroke="#facc15" stroke-width="5" stroke-linecap="round"/>
+          <line x1="145" y1="168" x2="178" y2="168" stroke="#facc15" stroke-width="5" stroke-linecap="round"/>
+          <!-- Truk Boks 3D -->
+          <rect x="24" y="74" width="96" height="66" rx="12" fill="#facc15" stroke="#eab308" stroke-width="3"/>
+          <rect x="36" y="88" width="72" height="36" rx="8" fill="#fef9c3"/>
+          <text x="72" y="111" text-anchor="middle" font-size="13" font-weight="900" fill="#b45309">PAKET</text>
+          <!-- Kepala Truk -->
+          <path d="M120 92 L156 92 Q172 92 174 110 L176 140 L120 140 Z" fill="#0ea5e9"/>
+          <rect x="132" y="100" width="28" height="20" rx="5" fill="#bae6fd"/>
+          <!-- Roda 3D -->
+          <circle cx="58" cy="144" r="16" fill="#1e293b"/>
+          <circle cx="58" cy="144" r="7" fill="#cbd5e1"/>
+          <circle cx="148" cy="144" r="16" fill="#1e293b"/>
+          <circle cx="148" cy="144" r="7" fill="#cbd5e1"/>
+        </svg>`,
+
+      // Soal 6: Pabrik / Pengrajin menghasilkan barang (Produsen)
+      produsen: `
+        <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="184" height="184" rx="28" fill="#fef9c3"/>
+          <!-- Bangunan Workshop / Pabrik 3D -->
+          <polygon points="34,158 34,94 70,112 70,94 106,112 106,94 166,94 166,158" fill="#38bdf8"/>
+          <rect x="134" y="54" width="18" height="44" rx="4" fill="#f97316"/>
+          <circle cx="146" cy="40" r="8" fill="#ffffff" opacity="0.85"/>
+          <circle cx="158" cy="28" r="10" fill="#ffffff" opacity="0.75"/>
+          <!-- Jendela & Kotak Produk -->
+          <rect x="48" y="122" width="22" height="22" rx="5" fill="#fef08a"/>
+          <rect x="82" y="122" width="22" height="22" rx="5" fill="#fef08a"/>
+          <rect x="122" y="126" width="30" height="32" rx="6" fill="#22c55e"/>
+          <path d="M122 140 L152 140" stroke="#15803d" stroke-width="3"/>
+        </svg>`,
+
+      // Soal 7: Mengantarkan barang ke toko (Distribusi)
+      keToko: `
+        <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="184" height="184" rx="28" fill="#dcfce7"/>
+          <!-- Toko Ceria 3D -->
+          <rect x="86" y="72" width="92" height="88" rx="12" fill="#ffffff" stroke="#38bdf8" stroke-width="3"/>
+          <!-- Kanopi Toko -->
+          <path d="M80 74 L184 74 L176 94 L88 94 Z" fill="#f97316"/>
+          <rect x="104" y="108" width="26" height="52" rx="4" fill="#bae6fd"/>
+          <rect x="138" y="108" width="28" height="28" rx="4" fill="#fef08a"/>
+          <!-- Kurir Bawa Kardus ke Toko -->
+          <circle cx="44" cy="108" r="16" fill="#fed7aa"/>
+          <path d="M24 160 C24 132, 64 132, 64 160 Z" fill="#22c55e"/>
+          <rect x="48" y="124" width="32" height="26" rx="5" fill="#facc15" stroke="#ca8a04" stroke-width="2"/>
+        </svg>`,
+
+      // Soal 8: Konsumen menggunakan/membeli barang (Konsumen)
+      konsumen: `
+        <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="184" height="184" rx="28" fill="#e0f2fe"/>
+          <!-- Pembeli Ceria Membawa Tas Belanja -->
+          <circle cx="92" cy="76" r="24" fill="#fed7aa"/>
+          <path d="M68 70 C72 44, 112 44, 116 70 Z" fill="#7c2d12"/>
+          <circle cx="85" cy="76" r="3.5" fill="#1e293b"/>
+          <circle cx="101" cy="76" r="3.5" fill="#1e293b"/>
+          <path d="M86 86 Q93 93 100 86" stroke="#9a3412" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M58 164 C58 114, 126 114, 126 164 Z" fill="#f97316"/>
+          <!-- Tas Belanja 3D -->
+          <rect x="114" y="114" width="44" height="48" rx="8" fill="#22c55e"/>
+          <path d="M126 114 C126 98, 146 98, 146 114" stroke="#15803d" stroke-width="4" fill="none"/>
+          <circle cx="136" cy="138" r="9" fill="#fef08a"/>
+        </svg>`,
+
+      // Soal 9: Penjahit membuat pakaian (Produksi)
+      penjahit: `
+        <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="184" height="184" rx="28" fill="#fef3c7"/>
+          <!-- Meja & Mesin Jahit 3D -->
+          <rect x="24" y="144" width="152" height="22" rx="8" fill="#b45309"/>
+          <path d="M44 144 L44 92 L124 92 L124 124 L74 124 L74 144 Z" fill="#0ea5e9"/>
+          <circle cx="126" cy="106" r="14" fill="#0369a1"/>
+          <rect x="52" y="124" width="4" height="16" fill="#475569"/>
+          <!-- Baju Jadi yang Dibuat -->
+          <g transform="translate(122, 42)">
+            <path d="M16 8 L36 8 L50 22 L40 30 L34 24 L34 48 L18 48 L18 24 L12 30 L2 22 Z" fill="#4ade80" stroke="#16a34a" stroke-width="2"/>
+          </g>
+        </svg>`,
+
+      // Soal 10: Siklus Produksi, Distribusi, Konsumsi
+      siklus: `
+        <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="184" height="184" rx="28" fill="#f0fdf4"/>
+          <!-- Lingkaran Penghubung -->
+          <circle cx="100" cy="102" r="56" fill="none" stroke="#38bdf8" stroke-width="6" stroke-dasharray="12 8"/>
+          <!-- 1. Produksi (Atas) -->
+          <circle cx="100" cy="46" r="26" fill="#facc15" stroke="#eab308" stroke-width="3"/>
+          <text x="100" y="53" text-anchor="middle" font-size="22">🏭</text>
+          <!-- 2. Distribusi (Kanan Bawah) -->
+          <circle cx="150" cy="132" r="26" fill="#fb923c" stroke="#ea580c" stroke-width="3"/>
+          <text x="150" y="139" text-anchor="middle" font-size="22">🚚</text>
+          <!-- 3. Konsumsi (Kiri Bawah) -->
+          <circle cx="50" cy="132" r="26" fill="#4ade80" stroke="#16a34a" stroke-width="3"/>
+          <text x="50" y="139" text-anchor="middle" font-size="22">🛍️</text>
+          <!-- Inti Kaca Pembesar -->
+          <circle cx="100" cy="104" r="18" fill="#0ea5e9"/>
+          <text x="100" y="111" text-anchor="middle" font-size="18">🔍</text>
+        </svg>`
+    };
+
+    /* =========================================================================
+       2. BANK SOAL KUIS DETEKTIF EKONOMI (10 SOAL SESUAI MATERI)
+    ========================================================================= */
+    const QUIZ_QUESTIONS = [
+      {
+        number: 1,
+        question: "Kegiatan yang dilakukan petani saat menanam dan memanen padi termasuk kegiatan apa?",
+        options: [
+          { key: "A", text: "Produksi" },
+          { key: "B", text: "Distribusi" },
+          { key: "C", text: "Konsumsi" },
+          { key: "D", text: "Transportasi" }
+        ],
+        correctKey: "A",
+        illustration: ILLUSTRATIONS.petani,
+        explanation: "Petani menghasilkan bahan pangan berupa padi. Kegiatan menghasilkan atau membuat barang disebut produksi."
+      },
+      {
+        number: 2,
+        question: "Orang yang mengantarkan paket kepada pembeli disebut ….",
+        options: [
+          { key: "A", text: "Produsen" },
+          { key: "B", text: "Konsumen" },
+          { key: "C", text: "Distributor" },
+          { key: "D", text: "Petani" }
+        ],
+        correctKey: "C",
+        illustration: ILLUSTRATIONS.kurir,
+        explanation: "Distributor adalah orang atau pihak yang menyalurkan dan mengantarkan barang dari pembuat ke pembeli."
+      },
+      {
+        number: 3,
+        question: "Anak yang sedang memakan roti melakukan kegiatan ….",
+        options: [
+          { key: "A", text: "Produksi" },
+          { key: "B", text: "Konsumsi" },
+          { key: "C", text: "Distribusi" },
+          { key: "D", text: "Pembuatan" }
+        ],
+        correctKey: "B",
+        illustration: ILLUSTRATIONS.makanRoti,
+        explanation: "Memakan roti berarti menggunakan atau menghabiskan barang untuk memenuhi kebutuhan, sehingga disebut konsumsi."
+      },
+      {
+        number: 4,
+        question: "Pembuat roti yang menghasilkan roti untuk dijual melakukan kegiatan ….",
+        options: [
+          { key: "A", text: "Produksi" },
+          { key: "B", text: "Konsumsi" },
+          { key: "C", text: "Distribusi" },
+          { key: "D", text: "Pembelian" }
+        ],
+        correctKey: "A",
+        illustration: ILLUSTRATIONS.pembuatRoti,
+        explanation: "Pembuat roti mengolah bahan menjadi roti siap jual. Kegiatan menghasilkan barang tersebut adalah produksi."
+      },
+      {
+        number: 5,
+        question: "Kegiatan menyalurkan barang dari produsen kepada konsumen disebut ….",
+        options: [
+          { key: "A", text: "Produksi" },
+          { key: "B", text: "Konsumsi" },
+          { key: "C", text: "Pembelian" },
+          { key: "D", text: "Distribusi" }
+        ],
+        correctKey: "D",
+        illustration: ILLUSTRATIONS.trukDistribusi,
+        explanation: "Distribusi adalah kegiatan menyalurkan atau mengirimkan barang dari tempat produksi sampai ke tangan konsumen."
+      },
+      {
+        number: 6,
+        question: "Orang yang menghasilkan barang atau jasa disebut ….",
+        options: [
+          { key: "A", text: "Konsumen" },
+          { key: "B", text: "Produsen" },
+          { key: "C", text: "Distributor" },
+          { key: "D", text: "Pembeli" }
+        ],
+        correctKey: "B",
+        illustration: ILLUSTRATIONS.produsen,
+        explanation: "Produsen adalah pelaku ekonomi yang membuat atau menghasilkan barang dan jasa untuk memenuhi kebutuhan."
+      },
+      {
+        number: 7,
+        question: "Contoh kegiatan distribusi adalah ….",
+        options: [
+          { key: "A", text: "Memakan nasi" },
+          { key: "B", text: "Membuat sepatu" },
+          { key: "C", text: "Mengantarkan barang ke toko" },
+          { key: "D", text: "Membaca buku" }
+        ],
+        correctKey: "C",
+        illustration: ILLUSTRATIONS.keToko,
+        explanation: "Mengantarkan barang ke toko menyalurkan barang dagangan agar mudah dibeli konsumen, sehingga termasuk distribusi."
+      },
+      {
+        number: 8,
+        question: "Orang yang menggunakan barang atau jasa untuk memenuhi kebutuhan disebut ….",
+        options: [
+          { key: "A", text: "Konsumen" },
+          { key: "B", text: "Produsen" },
+          { key: "C", text: "Distributor" },
+          { key: "D", text: "Pengrajin" }
+        ],
+        correctKey: "A",
+        illustration: ILLUSTRATIONS.konsumen,
+        explanation: "Konsumen adalah orang yang memakai, menikmati, atau menghabiskan barang dan jasa dalam kehidupan sehari-hari."
+      },
+      {
+        number: 9,
+        question: "Kegiatan ekonomi yang dilakukan penjahit ketika membuat pakaian adalah ….",
+        options: [
+          { key: "A", text: "Konsumsi" },
+          { key: "B", text: "Distribusi" },
+          { key: "C", text: "Pembelian" },
+          { key: "D", text: "Produksi" }
+        ],
+        correctKey: "D",
+        illustration: ILLUSTRATIONS.penjahit,
+        explanation: "Penjahit mengolah kain menjadi baju yang siap dipakai. Menghasilkan barang baru merupakan kegiatan produksi."
+      },
+      {
+        number: 10,
+        question: "Mengapa kegiatan produksi, distribusi, dan konsumsi saling berhubungan?",
+        options: [
+          { key: "A", text: "Karena semua kegiatan dilakukan di pasar." },
+          { key: "B", text: "Karena barang yang dihasilkan perlu disalurkan dan digunakan." },
+          { key: "C", text: "Karena semua orang menjadi pedagang." },
+          { key: "D", text: "Karena semua barang harus dibuat sendiri." }
+        ],
+        correctKey: "B",
+        illustration: ILLUSTRATIONS.siklus,
+        explanation: "Ketiganya saling melengkapi: barang dibuat oleh produsen (produksi), dikirim oleh distributor (distribusi), lalu dipakai konsumen (konsumsi)."
+      }
+    ];
+
+    /* =========================================================================
+       3. STATE SESI KUIS (LOKAL DI MEMORI BROWSER)
+    ========================================================================= */
+    const state = {
+      studentName: "",
+      currentIndex: 0,
+      score: 0,
+      correctCount: 0,
+      wrongCount: 0,
+      isAnswered: false,
+      soundEnabled: true
+    };
+
+    /* =========================================================================
+       4. WEB AUDIO API SOUND ENGINE (EFEK SUARA CERIA TANPA FILE EKSTERNAL)
+    ========================================================================= */
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playTone(freq, type, duration, delay = 0, volume = 0.16) {
+      if (!state.soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime + delay;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(volume, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + duration);
+      } catch (e) {
+        // Abaikan jika browser memblokir audio sebelum interaksi
+      }
+    }
+
+    function playClickSound() {
+      playTone(520, "sine", 0.08, 0, 0.12);
+    }
+
+    function playCorrectSound() {
+      // Melodi naik ceria (C5 - E5 - G5 - C6)
+      playTone(523.25, "triangle", 0.14, 0, 0.18);
+      playTone(659.25, "triangle", 0.14, 0.09, 0.18);
+      playTone(783.99, "triangle", 0.16, 0.18, 0.18);
+      playTone(1046.5, "triangle", 0.32, 0.28, 0.2);
+    }
+
+    function playWrongSound() {
+      // Nada lembut menyemangati (E4 - C4)
+      playTone(329.63, "sine", 0.2, 0, 0.15);
+      playTone(261.63, "sine", 0.3, 0.15, 0.15);
+    }
+
+    function playFinishSound() {
+      const notes = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+      notes.forEach((n, idx) => {
+        playTone(n, "triangle", 0.18, idx * 0.11, 0.18);
+      });
+    }
+
+    function toggleSound() {
+      state.soundEnabled = !state.soundEnabled;
+      const icon = document.getElementById("sound-icon");
+      const label = document.getElementById("sound-label");
+      if (state.soundEnabled) {
+        icon.textContent = "🔊";
+        label.textContent = "Suara Aktif";
+        playClickSound();
+      } else {
+        icon.textContent = "🔇";
+        label.textContent = "Suara Mati";
+      }
+    }
+
+    /* =========================================================================
+       5. SISTEM ANIMASI CONFETTI CERIA
+    ========================================================================= */
+    const confettiCanvas = document.getElementById("confetti-canvas");
+    const confettiCtx = confettiCanvas.getContext("2d");
+    let confettiParticles = [];
+    let confettiAnimating = false;
+
+    function resizeConfetti() {
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeConfetti);
+    resizeConfetti();
+
+    function launchConfetti(count = 75) {
+      const colors = ["#38bdf8", "#facc15", "#4ade80", "#fb923c", "#f472b6", "#a78bfa"];
+      for (let i = 0; i < count; i++) {
+        confettiParticles.push({
+          x: Math.random() * confettiCanvas.width,
+          y: -20 - Math.random() * 120,
+          w: 8 + Math.random() * 7,
+          h: 6 + Math.random() * 6,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - 0.5) * 5,
+          vy: 3 + Math.random() * 4.5,
+          angle: Math.random() * 360,
+          spin: (Math.random() - 0.5) * 10
+        });
+      }
+      if (!confettiAnimating) {
+        confettiAnimating = true;
+        animateConfetti();
+      }
+    }
+
+    function animateConfetti() {
+      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      confettiParticles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.angle += p.spin;
+        confettiCtx.save();
+        confettiCtx.translate(p.x, p.y);
+        confettiCtx.rotate((p.angle * Math.PI) / 180);
+        confettiCtx.fillStyle = p.color;
+        confettiCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        confettiCtx.restore();
+      });
+
+      confettiParticles = confettiParticles.filter((p) => p.y < confettiCanvas.height + 30);
+      if (confettiParticles.length > 0) {
+        requestAnimationFrame(animateConfetti);
+      } else {
+        confettiAnimating = false;
+        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      }
+    }
+
+    /* =========================================================================
+       6. NAVIGASI ANTAR HALAMAN
+    ========================================================================= */
+    const PAGES = ["page-login", "page-instructions", "page-quiz", "page-result", "page-goodbye"];
+
+    function showPage(pageId) {
+      PAGES.forEach((id) => {
+        const el = document.getElementById(id);
+        if (id === pageId) {
+          el.classList.remove("hidden");
+          el.classList.remove("page-enter");
+          void el.offsetWidth; // trigger reflow untuk animasi masuk
+          el.classList.add("page-enter");
+        } else {
+          el.classList.add("hidden");
+        }
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* =========================================================================
+       7. LOGIKA HALAMAN 1 (LOGIN) & HALAMAN 2 (PETUNJUK)
+    ========================================================================= */
+    function handleLogin(event) {
+      event.preventDefault();
+      const input = document.getElementById("student-name-input");
+      const errorMsg = document.getElementById("name-error-msg");
+      const rawName = input.value.trim();
+
+      if (!rawName) {
+        errorMsg.classList.remove("hidden");
+        input.classList.remove("animate-shake");
+        void input.offsetWidth;
+        input.classList.add("animate-shake");
+        input.focus();
+        playWrongSound();
+        return;
+      }
+
+      errorMsg.classList.add("hidden");
+      state.studentName = rawName;
+      playClickSound();
+
+      // Tampilkan badge nama di header & sapaan di Halaman 2
+      document.getElementById("header-student-name").textContent = state.studentName;
+      const badge = document.getElementById("header-student-badge");
+      badge.classList.remove("hidden");
+      badge.classList.add("flex");
+
+      document.getElementById("welcome-student-name").textContent = state.studentName;
+      showPage("page-instructions");
+    }
+
+    // Hilangkan peringatan error saat murid mulai mengetik
+    document.getElementById("student-name-input").addEventListener("input", () => {
+      document.getElementById("name-error-msg").classList.add("hidden");
+    });
+
+    /* =========================================================================
+       8. LOGIKA HALAMAN 3 (KUIS INTERAKTIF & FEEDBACK)
+    ========================================================================= */
+    function resetQuizData() {
+      state.currentIndex = 0;
+      state.score = 0;
+      state.correctCount = 0;
+      state.wrongCount = 0;
+      state.isAnswered = false;
+    }
+
+    function startQuiz() {
+      playClickSound();
+      resetQuizData();
+      renderQuestion();
+      showPage("page-quiz");
+    }
+
+    function renderQuestion() {
+      const q = QUIZ_QUESTIONS[state.currentIndex];
+      state.isAnswered = false;
+
+      // Update header status & progress bar
+      document.getElementById("question-number").textContent = q.number;
+      document.getElementById("case-badge-num").textContent = q.number;
+      document.getElementById("live-score").textContent = state.score;
+      const progressPercent = (q.number / QUIZ_QUESTIONS.length) * 100;
+      document.getElementById("quiz-progress-bar").style.width = `${progressPercent}%`;
+
+      // Update ilustrasi & teks pertanyaan
+      document.getElementById("question-illustration").innerHTML = q.illustration;
+      document.getElementById("question-text").textContent = q.question;
+
+      // Sembunyikan panel feedback
+      const feedbackPanel = document.getElementById("feedback-panel");
+      feedbackPanel.classList.add("hidden");
+
+      // Render 4 tombol pilihan A, B, C, D
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      const badgeColors = {
+        A: "bg-sky-500 text-white",
+        B: "bg-yellow-400 text-yellow-950",
+        C: "bg-green-500 text-white",
+        D: "bg-orange-500 text-white"
+      };
+
+      q.options.forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.key = opt.key;
+        btn.className = "option-card p-4 text-left flex items-center gap-3.5 w-full";
+        btn.innerHTML = `
+          <span class="w-10 h-10 rounded-xl ${badgeColors[opt.key]} font-display font-bold text-lg flex items-center justify-center shrink-0 shadow-sm">
+            ${opt.key}
+          </span>
+          <span class="font-extrabold text-slate-800 text-base sm:text-lg leading-snug flex-1">
+            ${opt.text}
+          </span>
+          <span class="status-mark text-xl font-bold shrink-0"></span>
+        `;
+        btn.addEventListener("click", () => selectAnswer(opt.key));
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(selectedKey) {
+      // Kunci jawaban: murid tidak boleh mengganti jawaban setelah memilih
+      if (state.isAnswered) return;
+      state.isAnswered = true;
+
+      const q = QUIZ_QUESTIONS[state.currentIndex];
+      const isCorrect = selectedKey === q.correctKey;
+      const correctOptionObj = q.options.find((o) => o.key === q.correctKey);
+
+      // Update skor otomatis & akurat
+      if (isCorrect) {
+        state.score += 10;
+        state.correctCount += 1;
+        document.getElementById("live-score").textContent = state.score;
+        playCorrectSound();
+        launchConfetti(65);
+      } else {
+        state.wrongCount += 1;
+        playWrongSound();
+      }
+
+      // Perbarui tampilan visual semua tombol pilihan & kunci interaksi
+      const optionButtons = document.querySelectorAll("#options-container .option-card");
+      optionButtons.forEach((btn) => {
+        btn.classList.add("locked");
+        btn.disabled = true;
+        const key = btn.dataset.key;
+        const markEl = btn.querySelector(".status-mark");
+
+        if (key === q.correctKey) {
+          btn.classList.add("correct");
+          markEl.textContent = "✅";
+        } else if (key === selectedKey && !isCorrect) {
+          btn.classList.add("wrong");
+          markEl.textContent = "❌";
+        } else {
+          btn.classList.add("dimmed");
+        }
+      });
+
+      // Tampilkan panel feedback sesuai hasil
+      const panel = document.getElementById("feedback-panel");
+      const iconEl = document.getElementById("feedback-icon");
+      const titleEl = document.getElementById("feedback-title");
+      const correctAnsEl = document.getElementById("feedback-correct-answer");
+      const explanationEl = document.getElementById("feedback-explanation");
+      const nextBtnText = document.getElementById("btn-next-text");
+
+      panel.classList.remove("hidden", "bg-green-50", "border-green-400", "text-green-900", "bg-orange-50", "border-orange-400", "text-orange-950");
+
+      if (isCorrect) {
+        panel.classList.add("bg-green-50", "border-green-400", "text-green-900");
+        iconEl.innerHTML = `<span class="inline-block animate-star">⭐</span>`;
+        titleEl.textContent = "HEBAT! JAWABAN KAMU BENAR!";
+        correctAnsEl.classList.add("hidden");
+      } else {
+        panel.classList.add("bg-orange-50", "border-orange-400", "text-orange-950");
+        iconEl.textContent = "💡";
+        titleEl.textContent = "YAH, BELUM TEPAT! TETAP SEMANGAT!";
+        correctAnsEl.textContent = `Jawaban yang benar: ${correctOptionObj.key}. ${correctOptionObj.text}`;
+        correctAnsEl.classList.remove("hidden");
+      }
+
+      explanationEl.textContent = q.explanation;
+
+      // Ubah label tombol lanjut jika sudah di soal terakhir (soal ke-10)
+      if (state.currentIndex === QUIZ_QUESTIONS.length - 1) {
+        nextBtnText.textContent = "LIHAT HASIL AKHIR";
+      } else {
+        nextBtnText.textContent = "LANJUT SOAL";
+      }
+
+      panel.classList.add("page-enter");
+    }
+
+    function nextQuestion() {
+      playClickSound();
+      if (state.currentIndex < QUIZ_QUESTIONS.length - 1) {
+        state.currentIndex += 1;
+        renderQuestion();
+      } else {
+        showFinalResult();
+      }
+    }
+
+    /* =========================================================================
+       9. LOGIKA HALAMAN 4 (HASIL AKHIR) & TOMBOL AKSI
+    ========================================================================= */
+    function showFinalResult() {
+      const totalQuestions = QUIZ_QUESTIONS.length;
+      const percentage = Math.round((state.correctCount / totalQuestions) * 100);
+
+      document.getElementById("result-student-name").textContent = state.studentName;
+      document.getElementById("result-score").textContent = state.score;
+      document.getElementById("result-correct-count").textContent = state.correctCount;
+      document.getElementById("result-wrong-count").textContent = state.wrongCount;
+      document.getElementById("result-percentage").textContent = percentage;
+
+      // Kategori pesan motivasi berdasarkan skor akhir
+      const motivationBox = document.getElementById("result-motivation-box");
+      const trophyEl = document.getElementById("result-trophy");
+      motivationBox.className = "max-w-xl mx-auto my-4 px-5 py-3.5 rounded-2xl border-2 font-display font-bold text-lg sm:text-xl shadow-sm";
+
+      if (state.score >= 90) {
+        motivationBox.textContent = "Luar Biasa! Kamu Detektif Ekonomi Hebat!";
+        motivationBox.classList.add("bg-green-100", "border-green-400", "text-green-900");
+        trophyEl.textContent = "🏆";
+        launchConfetti(110);
+      } else if (state.score >= 80) {
+        motivationBox.textContent = "Hebat! Pemahamanmu Sudah Bagus!";
+        motivationBox.classList.add("bg-sky-100", "border-sky-400", "text-sky-900");
+        trophyEl.textContent = "🥇";
+        launchConfetti(80);
+      } else if (state.score >= 70) {
+        motivationBox.textContent = "Bagus! Terus Tingkatkan Belajarmu!";
+        motivationBox.classList.add("bg-yellow-100", "border-yellow-400", "text-yellow-900");
+        trophyEl.textContent = "🎖️";
+        launchConfetti(50);
+      } else {
+        motivationBox.textContent = "Tetap Semangat! Yuk, Pelajari Materinya Lagi!";
+        motivationBox.classList.add("bg-orange-100", "border-orange-400", "text-orange-900");
+        trophyEl.textContent = "📚";
+      }
+
+      playFinishSound();
+      showPage("page-result");
+    }
+
+    function retryQuiz() {
+      playClickSound();
+      resetQuizData();
+      renderQuestion();
+      showPage("page-quiz");
+    }
+
+    function backToHome() {
+      playClickSound();
+      resetQuizData();
+      state.studentName = "";
+      document.getElementById("student-name-input").value = "";
+      document.getElementById("name-error-msg").classList.add("hidden");
+
+      const badge = document.getElementById("header-student-badge");
+      badge.classList.add("hidden");
+      badge.classList.remove("flex");
+
+      showPage("page-login");
+    }
+
+    function finishSession() {
+      playFinishSound();
+      launchConfetti(70);
+      document.getElementById("goodbye-student-name").textContent = state.studentName || "Hebat";
+      document.getElementById("goodbye-score").textContent = state.score;
+      showPage("page-goodbye");
+    }
+  </script>
+</body>
+</html>
